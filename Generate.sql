@@ -41,10 +41,10 @@ CREATE TABLE tree (
 
 INSERT INTO tree
 VALUES
-(1, 'Larix', 'laricina', 'conical', 'needles', 12, 24, 'Pinales'),
-(2, 'Carya', 'cordiformis', 'rounded', 'pinnately compound', 18, 24, 'Juglandaceae'),
-(3, 'Ulmus', 'americana', 'vase', 'elliptical', 24, 42, 'Ulmaceae'),
-(4, 'Malus', 'ioensis', 'broad', 'elliptical', 3, 9, 'Rosaceae');
+(18, 'Larix', 'laricina', 'conical', 'needles', 12, 24, 'Pinaceae'),
+(332, 'Carya', 'cordiformis', 'rounded', 'pinnately compound', 18, 24, 'Juglandaceae'),
+(162, 'Ulmus', 'americana', 'vase', 'elliptical', 24, 42, 'Ulmaceae'),
+(130, 'Malus', 'ioensis', 'broad', 'elliptical', 3, 9, 'Rosaceae');
 
 /* Common name table */
 CREATE TABLE common_name (
@@ -123,6 +123,6 @@ CREATE TABLE sighting (
 INSERT INTO sighting
 VALUES
 (101, 18, '2016-06-15', 45.7, -93.1, 280),
-(25, 162, '2010-01-19', 43.8, 70.2, 22),
+(25, 162, '2010-01-19', 43.8, -70.2, 22),
 (7005, 130, '2012-12-01', 41.3, -91.1, 166),
 (7006, 162, '2012-12-01', 46.4, -62.2, 53);
