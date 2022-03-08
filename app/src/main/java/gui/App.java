@@ -1,12 +1,12 @@
 package gui;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sqljdbc.Connector;
-import sqljdbc.Query;
 
 /**
  * Launches the graphical user interface (GUI) to get and set information in 
@@ -15,34 +15,28 @@ import sqljdbc.Query;
  */
 public class App extends Application {
     
-    public static void main(String[] args) throws SQLException {
-        connect();
+    public static void main(String[] args){
+        // Launch GUI
         launch();
     }
 
     @Override
-    public void start(Stage stage) throws SQLException {
+    public void start(Stage stage) {
         stage.setTitle("Forestry Data");
-        //stage.setWidth(700);
-        //stage.setHeight(500);
         var scene = new Scene(new Group());
         stage.setScene(scene);
         
-        // Make TabPane
-        ((Group) scene.getRoot()).getChildren().addAll(new Tabs().getTabs());
+        // Add tabs
+        try {
+            Connection conn = Connector.makeConnection();
+            ((Group) scene.getRoot()).getChildren().addAll(
+                    new Tabs(conn).getPane());
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
         
         stage.show();
-    }
-    
-    public static void connect() {
-        try {
-            Connector.makeConnection();
-            System.out.println(String.format("Connected to database %s "
-                    + "successfully.", Connector.conn.getCatalog()));
-        } 
-        catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }      
     }
     
 }

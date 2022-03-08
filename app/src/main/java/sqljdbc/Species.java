@@ -3,8 +3,7 @@ package sqljdbc;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Stores information on a species as a result of the query in 
- * Query.getSpecies() as properties for later use in factories.
+ * Stores information on a species as a result of the species query in Query.
  */
 public class Species {
     public Species(String genus, String species, String tree_name) {

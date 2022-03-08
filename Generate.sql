@@ -50,7 +50,7 @@ VALUES
 CREATE TABLE common_name (
     tree_id int NOT NULL,
     tree_name varchar(20) NOT NULL,
-    PRIMARY KEY (tree_id),
+    PRIMARY KEY (tree_id, tree_name),
     FOREIGN KEY (tree_id) REFERENCES tree(tree_id)
 );
 
