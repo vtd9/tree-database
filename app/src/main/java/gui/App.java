@@ -1,12 +1,11 @@
 package gui;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sqljdbc.Connector;
+import db.Connector;
 
 /**
  * Launches the graphical user interface (GUI) to get and set information in 
@@ -22,21 +21,19 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.setWidth(PREF_WIDTH);
         stage.setTitle("Forestry Data");
         var scene = new Scene(new Group());
         stage.setScene(scene);
         
-        // Add tabs
-        try {
-            Connection conn = Connector.makeConnection();
-            ((Group) scene.getRoot()).getChildren().addAll(
-                    new Tabs(conn).getPane());
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        // Connect to database and add tabs
+        Connection conn = Connector.makeConnection();
+        ((Group) scene.getRoot()).getChildren().addAll(
+                new Tabs(conn).getPane());
         
         stage.show();
     }
     
+    public static final int PREF_WIDTH = 600;
+    public static final int BUTTON_WIDTH = 80;
 }

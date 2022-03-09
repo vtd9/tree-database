@@ -12,8 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import sqljdbc.Query;
-import sqljdbc.Species;
+import db.Query;
+import db.Species;
 
 /**
  * Create the species tab for the main TabPane
@@ -34,7 +34,7 @@ public class TabSpecies {
     
     private void fillBox() {
         // Resize the VBox
-        speciesBox.setPrefWidth(PREF_WIDTH);
+        speciesBox.setPrefWidth(App.PREF_WIDTH);
         
         // Make description label
         Label desc = new Label(DESCRIPTION);
@@ -42,7 +42,7 @@ public class TabSpecies {
         desc.setPadding(new Insets(5, 5, 5, 5));
 
         // Stack together in vertical box
-        speciesBox.setPadding(new Insets(5, 5, 5, 5));
+        speciesBox.setPadding(new Insets(5, 10, 5, 10));
         speciesBox.getChildren().addAll(
                 desc, createButtonBox(), new StackPane(table));
     }
@@ -50,7 +50,7 @@ public class TabSpecies {
     private HBox createButtonBox() {
         // Make refresh button
         Button refreshButton = new Button(REFRESH);
-        refreshButton.setPrefWidth(BUTTON_WIDTH);
+        refreshButton.setPrefWidth(App.BUTTON_WIDTH);
         refreshButton.setOnMousePressed((MouseEvent event) -> {
             table.getItems().clear();
             fillTable();
@@ -97,8 +97,6 @@ public class TabSpecies {
     private final VBox speciesBox;
     private final String TITLE = "Species";
     private final String REFRESH = "Refresh";
-    private final int BUTTON_WIDTH = 100;
-    private final int PREF_WIDTH = 500;
     private final String DESCRIPTION = "View all the species currently"
             + " present in the database by both their scientific"
             + " and common names.";

@@ -1,4 +1,4 @@
-package sqljdbc;
+package db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,20 +62,29 @@ public class Query {
     }
 
     public ObservableList<Sighting> getSightings(
-        String genus, String species, boolean sciGiven) {
+        String name, boolean sciGiven) {
         ObservableList<Sighting> sightings = 
                 FXCollections.observableArrayList();
         try {
             // Create prepared statement for DBMS to compile
             PreparedStatement pstmt;
             if (sciGiven) {
-                pstmt = conn.prepareStatement(QUERY_SIGHT_SCI);
-                pstmt.setString(1, genus);
-                pstmt.setString(2, species);
+                if (name.contains(" ")) {
+                    // Split scientific name by space
+                    String[] parts = name.split(" ");
+
+                    // Set the parameters in the prepared statement
+                    pstmt = conn.prepareStatement(QUERY_SIGHT_SCI);
+                    pstmt.setString(1, parts[0]);
+                    pstmt.setString(2, parts[1]);
+                }
+                else {
+                    throw new IllegalArgumentException(SCI_NO_SPACE); 
+                }
             }
             else {
                 pstmt = conn.prepareStatement(QUERY_SIGHT_COMMON);
-                pstmt.setString(1, species);
+                pstmt.setString(1, name);
             }
             prevRs = pstmt.executeQuery();
             List<String> colNames = getColNames();
@@ -108,4 +117,6 @@ public class Query {
             + " sighting_date, latitude, longitude, altitude"
             + " FROM sighting NATURAL JOIN tree NATURAL JOIN common_name"
             + " WHERE tree_name = ?";
+    private static final String SCI_NO_SPACE = 
+            "Entered name does not contain a space!";
 }

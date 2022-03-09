@@ -1,4 +1,4 @@
-package sqljdbc;
+package db;
 
 import javafx.beans.property.SimpleStringProperty;
 
