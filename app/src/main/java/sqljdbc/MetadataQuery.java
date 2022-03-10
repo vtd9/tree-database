@@ -11,9 +11,8 @@ import java.util.List;
 
 /**
  *
- * @author RrbDellDesktop3
  */
-public class Metadata {
+public class MetadataQuery {
     /**
      * Get list of table names in the database.
      * @return Unmodifiable list of table names, which are strings
@@ -67,6 +66,6 @@ public class Metadata {
     }
     
     
-    private static final Connection conn = Connector.conn;
+    private static final Connection conn = Connector.makeConnection();
     private static final String SYS_CONFIG = "sys_config";
 }

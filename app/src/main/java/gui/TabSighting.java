@@ -13,28 +13,24 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import sqljdbc.Query;
-import sqljdbc.Species;
+import sqljdbc.Sighting;
 
 /**
  * Create the species tab for the main TabPane
  */
-public class TabSpecies {
-    public TabSpecies(Query query) {
+public class TabSighting {
+    public TabSighting(Query query) {
         this.query = query;
-        
-        // Initialize class variables
-        speciesBox = new VBox();
-        table = new TableView();
 
         // Create new Tab object
         fillBox();
         tab = new Tab(TITLE);
-        tab.setContent(speciesBox);
+        tab.setContent(sightingBox);
     }
     
     private void fillBox() {
         // Resize the VBox
-        speciesBox.setPrefWidth(PREF_WIDTH);
+        sightingBox.setPrefWidth(PREF_WIDTH);
         
         // Make description label
         Label desc = new Label(DESCRIPTION);
@@ -42,8 +38,8 @@ public class TabSpecies {
         desc.setPadding(new Insets(5, 5, 5, 5));
 
         // Stack together in vertical box
-        speciesBox.setPadding(new Insets(5, 5, 5, 5));
-        speciesBox.getChildren().addAll(
+        sightingBox.setPadding(new Insets(5, 5, 5, 5));
+        sightingBox.getChildren().addAll(
                 desc, createButtonBox(), new StackPane(table));
     }
     
@@ -68,7 +64,7 @@ public class TabSpecies {
         table.setPadding(new Insets(5, 5, 5, 5));
         
         // Fill the table
-        table.setItems(query.getSpecies());
+        table.setItems(query.getSightings("", "Tamarack", false));
         createColumns();
     }
     
@@ -81,7 +77,7 @@ public class TabSpecies {
         for (int i = 0; i < cols.size(); i++) {
             TableColumn col = new TableColumn(cols.get(i));
             col.setCellValueFactory(
-                    new PropertyValueFactory<Species, String>(cols.get(i))
+                    new PropertyValueFactory<Sighting, String>(cols.get(i))
             );            
             table.getColumns().add(col);
         }
@@ -93,13 +89,12 @@ public class TabSpecies {
 
     private final Query query;
     private final Tab tab;
-    private final TableView table;
-    private final VBox speciesBox;
-    private final String TITLE = "Species";
+    private final TableView table = new TableView();
+    private final VBox sightingBox = new VBox();
+    private final String TITLE = "Sightings";
     private final String REFRESH = "Refresh";
     private final int BUTTON_WIDTH = 100;
     private final int PREF_WIDTH = 500;
-    private final String DESCRIPTION = "View all the species currently"
-            + " present in the database by both their scientific"
-            + " and common names.";
+    private final String DESCRIPTION = "View the sightings for a tree currently"
+            + " in the database by either a scientific or common name.";
 }
