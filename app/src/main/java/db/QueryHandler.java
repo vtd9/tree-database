@@ -10,23 +10,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
+ * Interface with a database to view a subset of tables.
  */
-public class Query {
+public class QueryHandler {
     /**
-     * Construct a query object with a connection to the database.
+     * Construct a Query object with a connection to the database.
      * @param conn Connection to the database to query.
      */
-    public Query(Connection conn) {
+    public QueryHandler(Connection conn) {
         this.conn = conn;
     }
     
     public List<String> getColNames() {
         List<String> colNames = null;
         try {
-            colNames = MetadataQuery.getResultCols(prevRs.getMetaData());
+            colNames = MetadataHandler.getResultCols(prevRs.getMetaData());
         }
         catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
         return colNames;
     }
@@ -107,16 +108,16 @@ public class Query {
 
     private static ResultSet prevRs;
     private final Connection conn;
-    private static final String QUERY_SPECIES = "SELECT genus, species,"
+    private final String QUERY_SPECIES = "SELECT genus, species,"
             + " tree_name FROM tree NATURAL JOIN common_name";
-    private static final String QUERY_SIGHT_SCI = "SELECT"
+    private final String QUERY_SIGHT_SCI = "SELECT"
             + " sighting_date, latitude, longitude, altitude"
             + " FROM sighting NATURAL JOIN tree"
             + " WHERE genus = ? AND species = ?";
-    private static final String QUERY_SIGHT_COMMON = "SELECT"
+    private final String QUERY_SIGHT_COMMON = "SELECT"
             + " sighting_date, latitude, longitude, altitude"
             + " FROM sighting NATURAL JOIN tree NATURAL JOIN common_name"
             + " WHERE tree_name = ?";
-    private static final String SCI_NO_SPACE = 
+    private final String SCI_NO_SPACE = 
             "Entered name does not contain a space!";
 }

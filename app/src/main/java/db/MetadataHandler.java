@@ -10,9 +10,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * Parse metadata and other result sets from SQL queries.
  */
-public class MetadataQuery {
+public class MetadataHandler {
     /**
      * Get list of table names in the database.
      * @return Unmodifiable list of table names, which are strings

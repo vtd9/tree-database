@@ -6,16 +6,18 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import db.Connector;
+import db.UpdateHandler;
 
 /**
- * Launches the graphical user interface (GUI) to get and set information in 
+ * Launch the graphical user interface (GUI) to get and set information in 
  * the forestry MySQL database. Assume the view of an field biologist that has
- * authorization to perform certain admin actions.
+ * the authorization to perform certain getting and setting actions.
  */
 public class App extends Application {
-    
     public static void main(String[] args){
-        // Launch GUI
+        UpdateHandler u = new UpdateHandler(Connector.makeConnection());
+        System.out.println(u.addHabitat(
+                "dry", "", "valley"));
         launch();
     }
 

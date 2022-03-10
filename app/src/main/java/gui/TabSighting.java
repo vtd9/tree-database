@@ -15,14 +15,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import db.Query;
+import db.QueryHandler;
 import db.Sighting;
 
 /**
  * Create the species tab for the main TabPane
  */
 public class TabSighting {
-    public TabSighting(Query query) {
+    public TabSighting(QueryHandler query) {
         this.query = query;
 
         // Create new Tab object
@@ -112,13 +112,13 @@ public class TabSighting {
         return tab;
     }
 
-    private final Query query;
+    private final QueryHandler query;
     private final Tab tab;
     private final TableView table = new TableView();
     private final VBox sightingBox = new VBox();
     private final String TITLE = "Sightings";
     private final String SEARCH = "Search";
-    private final String DESCRIPTION = "View all the sightings of a species"
+    private final String DESCRIPTION = "Find all the sightings of a species"
             + " currently in the database by either its scientific or"
             + " common name. Altitude is in meters.";
     private final String NAME = "Name:";
