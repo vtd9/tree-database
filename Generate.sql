@@ -26,7 +26,7 @@ VALUES
 
 /* Tree table */
 CREATE TABLE tree (
-    tree_id int NOT NULL,
+    tree_id int NOT NULL AUTO_INCREMENT,
     genus varchar(20) NOT NULL,
     species varchar(20) NOT NULL,
     shape varchar(20),
@@ -39,12 +39,12 @@ CREATE TABLE tree (
     FOREIGN KEY (family_name) REFERENCES family(family_name)
 );
 
-INSERT INTO tree
+INSERT INTO tree(genus, species, shape, leaf_type, min_height, max_height, family_name) 
 VALUES
-(18, 'Larix', 'laricina', 'conical', 'needles', 12, 24, 'Pinaceae'),
-(332, 'Carya', 'cordiformis', 'rounded', 'pinnately compound', 18, 24, 'Juglandaceae'),
-(162, 'Ulmus', 'americana', 'vase', 'elliptical', 24, 42, 'Ulmaceae'),
-(130, 'Malus', 'ioensis', 'broad', 'elliptical', 3, 9, 'Rosaceae');
+('Larix', 'laricina', 'conical', 'needles', 12, 24, 'Pinaceae'),
+('Carya', 'cordiformis', 'rounded', 'pinnately compound', 18, 24, 'Juglandaceae'),
+('Ulmus', 'americana', 'vase', 'elliptical', 24, 42, 'Ulmaceae'),
+('Malus', 'ioensis', 'broad', 'elliptical', 3, 9, 'Rosaceae');
 
 /* Common name table */
 CREATE TABLE common_name (
@@ -56,16 +56,16 @@ CREATE TABLE common_name (
 
 INSERT INTO common_name
 VALUES
-(18, 'Tamarack'),
-(332, 'Bitternut Hickory'),
-(162, 'American Elm'),
-(130, 'Prairie Crab Apple');
+(1, 'Tamarack'),
+(2, 'Bitternut Hickory'),
+(3, 'American Elm'),
+(4, 'Prairie Crab Apple');
 
 /* Flower table */
 CREATE TABLE flower (
     tree_id int NOT NULL,
     color varchar(10) NOT NULL,
-    shape varchar(10),
+    flower_shape varchar(10),
     petals int,
     PRIMARY KEY (tree_id, color),
     FOREIGN KEY (tree_id) REFERENCES tree(tree_id)
@@ -73,26 +73,26 @@ CREATE TABLE flower (
 
 INSERT INTO flower
 VALUES
-(332, 'green', 'catkins', NULL),
-(162, 'green', 'clustered', NULL),
-(130, 'pink', 'rounded', 5),
-(130, 'white', 'rounded', 5);
+(2, 'green', 'catkins', NULL),
+(3, 'green', 'clustered', NULL),
+(4, 'pink', 'rounded', 5),
+(4, 'white', 'rounded', 5);
 
 /* Habitat table */
 CREATE TABLE habitat (
-    habitat_id int NOT NULL,
+    habitat_id int NOT NULL AUTO_INCREMENT,
     soil_moisture varchar(10),
     soil_type varchar(10),
     habitat_type varchar(20),
     PRIMARY KEY (habitat_id)
 );
 
-INSERT INTO habitat
+INSERT INTO habitat(soil_moisture, soil_type, habitat_type) 
 VALUES
-(1, 'wet', 'peaty', 'bog'),
-(2, 'moist', null, 'valley'),
-(3, 'moist', 'clay', 'stream'),
-(4, 'dry', null, 'upland');
+('wet', 'peaty', 'bog'),
+('moist', null, 'valley'),
+('moist', 'clay', 'stream'),
+('dry', null, 'upland');
 
 /* Grows_in table */
 CREATE TABLE grows_in (
@@ -105,14 +105,14 @@ CREATE TABLE grows_in (
 
 INSERT INTO grows_in
 VALUES
-(332, 2),
-(332, 3),
-(162, 3),
-(130, 4);
+(2, 2),
+(2, 3),
+(3, 3),
+(4, 4);
 
 /* Sighting table */
 CREATE TABLE sighting (
-    sighting_id int NOT NULL,
+    sighting_id int NOT NULL AUTO_INCREMENT,
     tree_id int NOT NULL,
     sighting_date Date,
     latitude float,
@@ -122,9 +122,9 @@ CREATE TABLE sighting (
     FOREIGN KEY (tree_id) REFERENCES tree(tree_id)
 );
 
-INSERT INTO sighting
+INSERT INTO sighting(tree_id, sighting_date, latitude, longitude, altitude) 
 VALUES
-(101, 18, '2016-06-15', 45.7, -93.1, 280),
-(25, 162, '2010-01-19', 43.8, -70.2, 22),
-(7005, 130, '2012-12-01', 41.3, -91.1, 166),
-(7006, 162, '2012-12-01', 46.4, -62.2, 53);
+(1, '2016-06-15', 45.7, -93.1, 280),
+(3, '2010-01-19', 43.8, -70.2, 22),
+(4, '2012-12-01', 41.3, -91.1, 166),
+(3, '2012-12-01', 46.4, -62.2, 53);

@@ -1,5 +1,7 @@
 package db;
 
+import entities.Sighting;
+import entities.Species;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -66,21 +68,17 @@ public class Query {
         String name, boolean sciGiven) {
         ObservableList<Sighting> sightings = 
                 FXCollections.observableArrayList();
+        
         try {
-            // Create prepared statement for DBMS to compile
-            PreparedStatement pstmt;
+            PreparedStatement pstmt = conn.prepareStatement(QUERY_SIGHT_SCI);
+            
             if (sciGiven) {
+                // Parse scientific name (space separated) if given
                 if (name.contains(" ")) {
-                    // Split scientific name by space
                     String[] parts = name.split(" ");
-
-                    // Set the parameters in the prepared statement
-                    pstmt = conn.prepareStatement(QUERY_SIGHT_SCI);
+                    
                     pstmt.setString(1, parts[0]);
                     pstmt.setString(2, parts[1]);
-                }
-                else {
-                    throw new IllegalArgumentException(SCI_NO_SPACE); 
                 }
             }
             else {

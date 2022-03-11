@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import db.Query;
-import db.Species;
+import entities.Species;
 
 /**
  * Create the species tab for the main TabPane
@@ -39,7 +39,7 @@ public class TabSpecies {
         // Make description label
         Label desc = new Label(DESCRIPTION);
         desc.setWrapText(true);
-        desc.setPadding(new Insets(5, 5, 5, 5));
+        desc.setPadding(new Insets(5, 10, 5, 5));
 
         // Stack together in vertical box
         speciesBox.setPadding(new Insets(5, 10, 5, 10));

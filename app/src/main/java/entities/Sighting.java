@@ -1,4 +1,4 @@
-package db;
+package entities;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;

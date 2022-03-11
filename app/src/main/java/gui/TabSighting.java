@@ -16,7 +16,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import db.Query;
-import db.Sighting;
+import entities.Sighting;
 
 /**
  * Create the species tab for the main TabPane
@@ -30,7 +30,7 @@ public class TabSighting {
         tab = new Tab(TITLE);
         tab.setContent(sightingBox);
     }
-    
+
     private void fillBox() {
         // Resize the VBox
         sightingBox.setPrefWidth(App.PREF_WIDTH);
@@ -38,10 +38,10 @@ public class TabSighting {
         // Make description label
         Label desc = new Label(DESCRIPTION);
         desc.setWrapText(true);
-        desc.setPadding(new Insets(5, 5, 5, 5));
+        desc.setPadding(new Insets(5, 10, 5, 5));
 
         // Stack together in a vertical box
-        sightingBox.setPadding(new Insets(5, 10, 5, 10));
+        sightingBox.setPadding(new Insets(5, 5, 5, 5));
         sightingBox.getChildren().addAll(
                 desc, createButtonBox(), new StackPane(table));
     }

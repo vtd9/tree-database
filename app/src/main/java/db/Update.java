@@ -65,34 +65,27 @@ public class Update {
   
         try {
             PreparedStatement pstmt;
-            
-            // If name given is scientific form, parse
             if (sciGiven) {
-                String[] parts;
-                if (name.contains(" ")) 
+                String[] parts = new String[2];
+                if (name.contains(" ")) {
                     parts = name.split(" ");
-                else
-                    throw new IllegalArgumentException(Query.SCI_NO_SPACE); 
-                
+                }
                 pstmt = conn.prepareStatement(INSERT_NEW_SIGHT_SCI);
-                pstmt.setString(6, parts[0]);
-                pstmt.setString(7, parts[1]);
+                pstmt.setString(5, parts[0]);
+                pstmt.setString(6, parts[1]);
             }
             else {
                 pstmt = conn.prepareStatement(INSERT_NEW_SIGHT_COM);
-                pstmt.setString(6, name);
+                pstmt.setString(5, name);
             }
             
             // Set other parameters in the statement
-            pstmt.setInt(1, getMaxSightingId() + 1);
-            pstmt.setString(2, sightingDate);
-            pstmt.setDouble(3, latitude);
-            pstmt.setDouble(4, longitude);
-            pstmt.setInt(5, altitude);
+            pstmt.setString(1, sightingDate);
+            pstmt.setDouble(2, latitude);
+            pstmt.setDouble(3, longitude);
+            pstmt.setInt(4, altitude);
             
             System.out.println(pstmt.toString());
-            
-            // Execute the insert
             rowAffected = pstmt.executeUpdate();
         }
         catch (SQLException e) {
@@ -123,10 +116,9 @@ public class Update {
         
         try {
             PreparedStatement pstmt = conn.prepareStatement(INSERT_NEW_HABITAT);
-            pstmt.setInt(1, getMaxHabitatId() + 1);
-            pstmt.setString(2, soilMoisture);
-            pstmt.setString(3, soilType);
-            pstmt.setString(4, habitatType);
+            pstmt.setString(1, soilMoisture);
+            pstmt.setString(2, soilType);
+            pstmt.setString(3, habitatType);
             rowAffected = pstmt.executeUpdate();
         }
         catch (SQLException e) {
@@ -135,42 +127,6 @@ public class Update {
         
         return rowAffected;
     }
-    
-    /**
-     * Get the value of the maximum sighting_id in the sighting table
-     * @return max value of sighting_id from the sighting table
-     */
-    public int getMaxSightingId() {
-        int maxId = -1;
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(QUERY_SIGHT_ID);
-            rs.next();
-            maxId = rs.getInt(1);
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return maxId;
-    }    
- 
-    /**
-     * Get the value of the maximum habitat_id in the habitat table
-     * @return max value of habitat_id from the habitat table
-     */
-    public int getMaxHabitatId() {
-        int maxId = -1;
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(QUERY_HABITAT_ID);
-            rs.next();
-            maxId = rs.getInt(1);
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return maxId;
-    }    
     
     private final Connection conn;
     
@@ -187,19 +143,14 @@ public class Update {
             + " WHERE genus = ? AND species = ?";
 
     private final String INSERT_NEW_SIGHT_COM = 
-            "INSERT INTO sighting (sighting_id, tree_id, sighting_date,"
+            "INSERT INTO sighting (tree_id, sighting_date,"
             + " latitude, longitude, altitude)"
-            + " SELECT ?, tree_id, ?, ?, ?, ?"
+            + " SELECT tree_id, ?, ?, ?, ?"
             + " FROM sighting NATURAL JOIN tree NATURAL JOIN common_name"
             + " WHERE tree_name = ?";
     
     private final String INSERT_NEW_HABITAT = 
-            "INSERT INTO habitat (habitat_id, soil_moisture, soil_type,"
-            + " habitat_type) VALUES (?, ?, ?, ?)";
+            "INSERT INTO habitat (soil_moisture, soil_type, habitat_type)"
+            + " VALUES (?, ?, ?)";
     
-    private final String QUERY_HABITAT_ID = "SELECT MAX(habitat_id)"
-            + " from habitat";
-
-    private final String QUERY_SIGHT_ID = "SELECT MAX(sighting_id)"
-            + " from sighting";
 }
