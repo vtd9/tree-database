@@ -6,7 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import db.Connector;
-import db.UpdateHandler;
+import db.Update;
 
 /**
  * Launch the graphical user interface (GUI) to get and set information in 
@@ -15,9 +15,9 @@ import db.UpdateHandler;
  */
 public class App extends Application {
     public static void main(String[] args){
-        UpdateHandler u = new UpdateHandler(Connector.makeConnection());
-        System.out.println(u.addHabitat(
-                "dry", "", "valley"));
+        Update u = new Update(Connector.makeConnection());
+        System.out.println(u.addSighting("Tamarack", false, 
+                "2018-05-18", 45.7, -90.1, 100));
         launch();
     }
 

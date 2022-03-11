@@ -15,14 +15,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import db.QueryHandler;
+import db.Query;
 import db.Sighting;
 
 /**
  * Create the species tab for the main TabPane
  */
 public class TabSighting {
-    public TabSighting(QueryHandler query) {
+    public TabSighting(Query query) {
         this.query = query;
 
         // Create new Tab object
@@ -112,7 +112,7 @@ public class TabSighting {
         return tab;
     }
 
-    private final QueryHandler query;
+    private final Query query;
     private final Tab tab;
     private final TableView table = new TableView();
     private final VBox sightingBox = new VBox();

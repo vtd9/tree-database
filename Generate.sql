@@ -117,7 +117,9 @@ CREATE TABLE sighting (
     sighting_date Date,
     latitude float,
     longitude float,
-    altitude int
+    altitude int,
+    PRIMARY KEY (sighting_id),
+    FOREIGN KEY (tree_id) REFERENCES tree(tree_id)
 );
 
 INSERT INTO sighting

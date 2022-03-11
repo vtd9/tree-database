@@ -12,12 +12,12 @@ import javafx.collections.ObservableList;
 /**
  * Interface with a database to view a subset of tables.
  */
-public class QueryHandler {
+public class Query {
     /**
      * Construct a Query object with a connection to the database.
      * @param conn Connection to the database to query.
      */
-    public QueryHandler(Connection conn) {
+    public Query(Connection conn) {
         this.conn = conn;
     }
     
@@ -108,16 +108,20 @@ public class QueryHandler {
 
     private static ResultSet prevRs;
     private final Connection conn;
+    
     private final String QUERY_SPECIES = "SELECT genus, species,"
             + " tree_name FROM tree NATURAL JOIN common_name";
+    
     private final String QUERY_SIGHT_SCI = "SELECT"
             + " sighting_date, latitude, longitude, altitude"
             + " FROM sighting NATURAL JOIN tree"
             + " WHERE genus = ? AND species = ?";
+    
     private final String QUERY_SIGHT_COMMON = "SELECT"
             + " sighting_date, latitude, longitude, altitude"
             + " FROM sighting NATURAL JOIN tree NATURAL JOIN common_name"
             + " WHERE tree_name = ?";
-    private final String SCI_NO_SPACE = 
+    
+    public static final String SCI_NO_SPACE = 
             "Entered name does not contain a space!";
 }

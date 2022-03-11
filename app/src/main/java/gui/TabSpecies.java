@@ -12,14 +12,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import db.QueryHandler;
+import db.Query;
 import db.Species;
 
 /**
  * Create the species tab for the main TabPane
  */
 public class TabSpecies {
-    public TabSpecies(QueryHandler query) {
+    public TabSpecies(Query query) {
         this.query = query;
         
         // Initialize class variables
@@ -91,7 +91,7 @@ public class TabSpecies {
         return tab;
     }
 
-    private final QueryHandler query;
+    private final Query query;
     private final Tab tab;
     private final TableView table;
     private final VBox speciesBox;
