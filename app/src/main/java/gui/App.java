@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import db.Connector;
+import db.Query;
 import db.Update;
 
 /**
@@ -16,8 +17,8 @@ import db.Update;
 public class App extends Application {
     public static void main(String[] args){
         Update u = new Update(Connector.makeConnection());
-        System.out.println(u.addSighting("Tamarack", false, 
-                "2018-05-18", 45.7, -90.1, 100));
+        Query q = new Query(Connector.makeConnection());
+        System.out.println();
         launch();
     }
 
@@ -36,6 +37,6 @@ public class App extends Application {
         stage.show();
     }
     
-    public static final int PREF_WIDTH = 600;
-    public static final int BUTTON_WIDTH = 80;
+    public static final int PREF_WIDTH = 700;
+    public static final int BUTTON_WIDTH = 70;
 }

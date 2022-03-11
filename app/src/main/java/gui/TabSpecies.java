@@ -13,14 +13,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import db.Query;
-import entities.Species;
+import db.Update;
+import entities.SpeciesName;
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * Create the species tab for the main TabPane
  */
 public class TabSpecies {
-    public TabSpecies(Query query) {
+    public TabSpecies(Query query, Update update) {
         this.query = query;
+        this.update = update;
         
         // Initialize class variables
         speciesBox = new VBox();
@@ -44,7 +49,8 @@ public class TabSpecies {
         // Stack together in vertical box
         speciesBox.setPadding(new Insets(5, 10, 5, 10));
         speciesBox.getChildren().addAll(
-                desc, createButtonBox(), new StackPane(table));
+                desc, createButtonBox(), new StackPane(table),
+                createAddBox());
     }
     
     private HBox createButtonBox() {
@@ -68,7 +74,7 @@ public class TabSpecies {
         table.setPadding(new Insets(5, 5, 5, 5));
         
         // Fill the table
-        table.setItems(query.getSpecies());
+        table.setItems(query.getSpeciesName());
         createColumns();
     }
     
@@ -76,15 +82,53 @@ public class TabSpecies {
         // Flush previous columns, if any
         table.getColumns().clear();
         
-        // For each attribute in the table, label column
+        // For each attribute in the table, label column and attach a factory
         List<String> cols = query.getColNames();
         for (int i = 0; i < cols.size(); i++) {
             TableColumn col = new TableColumn(cols.get(i));
             col.setCellValueFactory(
-                    new PropertyValueFactory<Species, String>(cols.get(i))
+                    new PropertyValueFactory<SpeciesName, String>(cols.get(i))
             );            
             table.getColumns().add(col);
         }
+    }
+    private HBox createAddBox() {
+            // Make description
+            Label desc = new Label(DESC_ADD_COM_NAME);
+            
+            // Initialize text field
+            newNameField = new TextField();
+            
+            // Make ComboBox
+            ComboBox speciesCombo = makeSpeciesCombo();
+            
+            // Make add button
+            Button addButton = new Button(ADD);
+            addButton.setPrefWidth(App.BUTTON_WIDTH);
+            addButton.setOnMousePressed((MouseEvent event) -> {
+                
+                // Get ComboBox result
+                String[] sciName = Query.splitSciName(
+                        speciesCombo.getValue().toString());
+                
+                // Get text field input
+                String newName = newNameField.getText();
+                if (!newName.isEmpty() && sciName.length == 2) {
+                    update.addCommonName(newName, sciName[0], sciName[1]);
+                }
+            });        
+
+            HBox buttonBox = new HBox();
+            buttonBox.setSpacing(5);
+            buttonBox.setPadding(new Insets(5, 5, 5, 5));
+            buttonBox.getChildren().addAll(
+                    desc, speciesCombo, newNameField, addButton);
+            return buttonBox;        
+        }
+
+    private ComboBox makeSpeciesCombo() {
+        return new ComboBox(FXCollections.observableList(
+                query.getSpecies()));
     }
     
     public Tab getTab() {
@@ -92,6 +136,7 @@ public class TabSpecies {
     }
 
     private final Query query;
+    private final Update update;
     private final Tab tab;
     private final TableView table;
     private final VBox speciesBox;
@@ -100,4 +145,11 @@ public class TabSpecies {
     private final String DESCRIPTION = "View all the species currently"
             + " present in the database by both their scientific"
             + " and common names.";
+    
+    // Data for setting components
+    private final String DESC_ADD_COM_NAME = "Insert a new common name to"
+            + " an existing species:";
+    private final String ADD = "Add";
+    private TextField newNameField;
+    
 }

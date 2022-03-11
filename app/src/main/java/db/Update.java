@@ -2,9 +2,7 @@ package db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  *
@@ -66,10 +64,7 @@ public class Update {
         try {
             PreparedStatement pstmt;
             if (sciGiven) {
-                String[] parts = new String[2];
-                if (name.contains(" ")) {
-                    parts = name.split(" ");
-                }
+                String[] parts = Query.splitSciName(name);
                 pstmt = conn.prepareStatement(INSERT_NEW_SIGHT_SCI);
                 pstmt.setString(5, parts[0]);
                 pstmt.setString(6, parts[1]);

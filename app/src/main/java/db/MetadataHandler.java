@@ -36,10 +36,16 @@ public class MetadataHandler {
         return resultToList(rs, "COLUMN_NAME");
     }
     
-    public static List<String> resultToList(ResultSet rs) throws SQLException {
+    public static List<String> resultToList(ResultSet rs) {
         List<String> rsList = new ArrayList<>();
-        while (rs.next()) {
-            rsList.add(rs.getString(1));
+        
+        try {
+            while (rs.next()) {
+                rsList.add(rs.getString(1));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
         return Collections.unmodifiableList(rsList);
     }
@@ -48,11 +54,18 @@ public class MetadataHandler {
             throws SQLException {
 
         List<String> rsList = new ArrayList<>();
-        while (rs.next()) {
-            if (!SYS_CONFIG.equals(rs.getString(getter))) {
-                rsList.add(rs.getString(getter));
+        
+        try {
+            while (rs.next()) {
+                if (!SYS_CONFIG.equals(rs.getString(getter))) {
+                    rsList.add(rs.getString(getter));
+                }
             }
         }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }  
+        
         return Collections.unmodifiableList(rsList);
     }
  

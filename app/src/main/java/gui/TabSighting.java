@@ -43,11 +43,13 @@ public class TabSighting {
         // Stack together in a vertical box
         sightingBox.setPadding(new Insets(5, 5, 5, 5));
         sightingBox.getChildren().addAll(
-                desc, createButtonBox(), new StackPane(table));
+                desc, 
+                createButtonBox(),
+                new StackPane(table));
     }
     
     private HBox createButtonBox() {
-        // Make text field
+        // Make label and initialize nameField
         Label nameLabel = new Label(NAME);
         nameField = new TextField();
 
@@ -79,7 +81,7 @@ public class TabSighting {
                 nameLabel, nameField, searchButton, rbSci, rbCom);
         return buttonBox;
     }
-    
+
     private void fillTable() {
         table.setEditable(true);
         table.setPadding(new Insets(5, 5, 5, 5));
@@ -126,4 +128,6 @@ public class TabSighting {
     private final String RADIO_SCI = "Scientific name";
     private final String RADIO_COM = "Common name";
     private ToggleGroup nameGroup;
+    
+
 }
