@@ -42,46 +42,36 @@ public class Update {
         }
         return rowAffected;
     }
-    
-    /**
-     * 
-     * @param name
-     * @param sciGiven
-     * @param sightingDate
-     * @param latitude
-     * @param longitude
-     * @param altitude
-     * @return 
-     */
-    public int addSighting(String name, boolean sciGiven, String sightingDate, 
-            double latitude, double longitude, int altitude) {
+
+    public int addSighting(String genus, String species, String sightingDate, 
+            String latitude, String longitude, String altitude) {
         int rowAffected = -1;
+        PreparedStatement pstmt;
         
-        // Handle empty string argument
-        if (sightingDate.isEmpty())
-            sightingDate = null;
-  
+        System.out.println(altitude.isEmpty());
+        
+        // Handle empty optional arguments and convert to numerical types
+        // From database constraints, latitude and longitude cannot be null
+        if (sightingDate.isEmpty()) sightingDate = null;
+
         try {
-            PreparedStatement pstmt;
-            if (sciGiven) {
-                String[] parts = Query.splitSciName(name);
-                pstmt = conn.prepareStatement(INSERT_NEW_SIGHT_SCI);
-                pstmt.setString(5, parts[0]);
-                pstmt.setString(6, parts[1]);
+            // Create PreparedStatement and set parameters
+            pstmt = conn.prepareStatement(INSERT_NEW_SIGHT);
+            pstmt.setString(1, sightingDate);
+            pstmt.setDouble(2, Double.parseDouble(latitude));
+            pstmt.setDouble(3, Double.parseDouble(longitude));
+            if (altitude.isEmpty()) {
+                pstmt.setNull(4, java.sql.Types.INTEGER);
             }
             else {
-                pstmt = conn.prepareStatement(INSERT_NEW_SIGHT_COM);
-                pstmt.setString(5, name);
+                pstmt.setInt(4, Integer.parseInt(altitude));
             }
+            pstmt.setString(5, genus);
+            pstmt.setString(6, species);
             
-            // Set other parameters in the statement
-            pstmt.setString(1, sightingDate);
-            pstmt.setDouble(2, latitude);
-            pstmt.setDouble(3, longitude);
-            pstmt.setInt(4, altitude);
+            // Execute update
+            rowAffected = pstmt.executeUpdate();  
             
-            System.out.println(pstmt.toString());
-            rowAffected = pstmt.executeUpdate();
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -130,22 +120,14 @@ public class Update {
             + " SELECT tree_id, ? FROM tree NATURAL JOIN common_name"
             + " WHERE genus = ? AND species = ?";
     
-    private final String INSERT_NEW_SIGHT_SCI = 
-            "INSERT INTO sighting (sighting_id, tree_id, sighting_date,"
-            + " latitude, longitude, altitude)"
-            + " SELECT ?, tree_id, ?, ?, ?, ?"
-            + " FROM sighting NATURAL JOIN tree"
-            + " WHERE genus = ? AND species = ?";
-
-    private final String INSERT_NEW_SIGHT_COM = 
+    private final String INSERT_NEW_SIGHT = 
             "INSERT INTO sighting (tree_id, sighting_date,"
             + " latitude, longitude, altitude)"
             + " SELECT tree_id, ?, ?, ?, ?"
-            + " FROM sighting NATURAL JOIN tree NATURAL JOIN common_name"
-            + " WHERE tree_name = ?";
+            + " FROM tree"
+            + " WHERE genus = ? AND species = ?";
     
     private final String INSERT_NEW_HABITAT = 
             "INSERT INTO habitat (soil_moisture, soil_type, habitat_type)"
             + " VALUES (?, ?, ?)";
-    
 }

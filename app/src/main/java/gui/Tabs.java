@@ -18,7 +18,7 @@ public class Tabs {
 
         // Add tabs
         tabPane.getTabs().add(new TabSpecies(query, update).getTab());
-        tabPane.getTabs().add(new TabSighting(query).getTab());
+        tabPane.getTabs().add(new TabSighting(query, update).getTab());
     }
 
     

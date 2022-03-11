@@ -95,18 +95,19 @@ public class TabSpecies {
     private HBox createAddBox() {
             // Make description
             Label desc = new Label(DESC_ADD_COM_NAME);
+
+            // Make ComboBox to select species to update
+            ComboBox speciesCombo =
+                    new ComboBox(FXCollections.observableList(
+                            query.getSpecies()));
             
             // Initialize text field
             newNameField = new TextField();
             
-            // Make ComboBox
-            ComboBox speciesCombo = makeSpeciesCombo();
-            
-            // Make add button
+            // Make add button with listener
             Button addButton = new Button(ADD);
             addButton.setPrefWidth(App.BUTTON_WIDTH);
             addButton.setOnMousePressed((MouseEvent event) -> {
-                
                 // Get ComboBox result
                 String[] sciName = Query.splitSciName(
                         speciesCombo.getValue().toString());
@@ -117,20 +118,16 @@ public class TabSpecies {
                     update.addCommonName(newName, sciName[0], sciName[1]);
                 }
             });        
-
-            HBox buttonBox = new HBox();
-            buttonBox.setSpacing(5);
-            buttonBox.setPadding(new Insets(5, 5, 5, 5));
-            buttonBox.getChildren().addAll(
+            
+            // Make the horizontal box and place the widgets in
+            HBox addBox = new HBox();
+            addBox.setSpacing(5);
+            addBox.setPadding(new Insets(5, 5, 5, 5));
+            addBox.getChildren().addAll(
                     desc, speciesCombo, newNameField, addButton);
-            return buttonBox;        
+            return addBox;        
         }
 
-    private ComboBox makeSpeciesCombo() {
-        return new ComboBox(FXCollections.observableList(
-                query.getSpecies()));
-    }
-    
     public Tab getTab() {
         return tab;
     }

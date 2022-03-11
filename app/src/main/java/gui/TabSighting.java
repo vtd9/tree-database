@@ -16,14 +16,18 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import db.Query;
+import db.Update;
 import entities.Sighting;
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
 
 /**
  * Create the species tab for the main TabPane
  */
 public class TabSighting {
-    public TabSighting(Query query) {
+    public TabSighting(Query query, Update update) {
         this.query = query;
+        this.update = update;
 
         // Create new Tab object
         fillBox();
@@ -45,13 +49,14 @@ public class TabSighting {
         sightingBox.getChildren().addAll(
                 desc, 
                 createButtonBox(),
-                new StackPane(table));
+                new StackPane(table),
+                createNewSightBox());
     }
     
     private HBox createButtonBox() {
-        // Make label and initialize nameField
-        Label nameLabel = new Label(NAME);
+        // Initialize nameField
         nameField = new TextField();
+        nameField.setPromptText(NAME);
 
         // Make execute button
         Button searchButton = new Button(SEARCH);
@@ -77,8 +82,7 @@ public class TabSighting {
         HBox buttonBox = new HBox();
         buttonBox.setSpacing(5);
         buttonBox.setPadding(new Insets(5, 5, 10, 5));
-        buttonBox.getChildren().addAll(
-                nameLabel, nameField, searchButton, rbSci, rbCom);
+        buttonBox.getChildren().addAll(nameField, searchButton, rbSci, rbCom);
         return buttonBox;
     }
 
@@ -110,24 +114,89 @@ public class TabSighting {
         }
     }
     
+    private HBox createNewSightBox() {
+        // Description of what setter is doing
+        Label desc = new Label(DESC_ADD_SIGHT);
+        
+        // Make ComboBox to select species to associate sighting with
+        ComboBox speciesCombo =
+                new ComboBox(FXCollections.observableList(
+                        query.getSpecies()));
+        
+        // Initialize fields
+        initSightFields(App.BUTTON_WIDTH);
+        
+        // Make add button with listener
+        Button addButton = new Button(ADD);
+        addButton.setPrefWidth(App.BUTTON_WIDTH);
+        addButton.setOnMousePressed((MouseEvent event) -> {
+            // Get ComboBox result
+            String[] sciName = Query.splitSciName(
+                    speciesCombo.getValue().toString());
+
+            // Pass inputs from text fields into method
+            update.addSighting(sciName[0], sciName[1], newDate.getText(),
+                    newLatitude.getText(), newLongitude.getText(),
+                    newAltitude.getText());
+        });
+        
+        
+        
+        // Make the horizontal box and place the widgets in
+        HBox newSightBox = new HBox();
+        newSightBox.setSpacing(5);
+        newSightBox.setPadding(new Insets(5, 5, 5, 5));
+        newSightBox.getChildren().addAll(desc, speciesCombo,
+                newDate, newLatitude, newLongitude, newAltitude, addButton);
+        return newSightBox;
+    }
+    
+    private void initSightFields(int fieldWidth) {
+        // Iniitialize text fields for other parameters
+        newDate = new TextField();
+        newLatitude = new TextField();
+        newLongitude = new TextField();
+        newAltitude = new TextField();
+        
+        newDate.setPrefWidth(fieldWidth*1.3);
+        newLatitude.setPrefWidth(fieldWidth);
+        newLongitude.setPrefWidth(fieldWidth);
+        newAltitude.setPrefWidth(fieldWidth);
+        
+        newDate.setPromptText(PROMPT_DATE);
+        newLatitude.setPromptText(PROMPT_LAT);
+        newLongitude.setPromptText(PROMPT_LON);
+        newAltitude.setPromptText(PROMPT_ALT);
+    }
+    
     public Tab getTab() {
         return tab;
     }
 
     private final Query query;
+    private final Update update;
     private final Tab tab;
     private final TableView table = new TableView();
     private final VBox sightingBox = new VBox();
+    private TextField nameField;
+    private ToggleGroup nameGroup;
+    
     private final String TITLE = "Sightings";
     private final String SEARCH = "Search";
     private final String DESCRIPTION = "Find all the sightings of a species"
             + " currently in the database by either its scientific or"
             + " common name. Altitude is in meters.";
-    private final String NAME = "Name:";
-    private TextField nameField;
+    private final String NAME = "Name";
     private final String RADIO_SCI = "Scientific name";
     private final String RADIO_COM = "Common name";
-    private ToggleGroup nameGroup;
     
+    // Data for inserting new sighting pieces
+    private final String DESC_ADD_SIGHT = "Add species sighting:";
+    private final String ADD = "add";
+    private TextField newDate, newLatitude, newLongitude, newAltitude;
+    private final String PROMPT_DATE = "YYYY-MM-DD";
+    private final String PROMPT_LAT = "Latitude";
+    private final String PROMPT_LON = "Longitude";
+    private final String PROMPT_ALT = "Altitude";
 
 }
