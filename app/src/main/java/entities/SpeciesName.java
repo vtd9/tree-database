@@ -1,12 +1,12 @@
-package sqljdbc;
+package entities;
 
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Stores information on a species as a result of the species query in Query.
+ * Store and get information on a species
  */
-public class Species {
-    public Species(String genus, String species, String tree_name) {
+public class SpeciesName {
+    public SpeciesName(String genus, String species, String tree_name) {
         this.genus = new SimpleStringProperty(genus);
         this.species = new SimpleStringProperty(species);
         this.tree_name = new SimpleStringProperty(tree_name);
