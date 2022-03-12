@@ -29,7 +29,7 @@ public class TabSpecies {
         
         // Initialize class variables
         speciesBox = new VBox();
-        table = new TableView();
+        table = new TableView<>();
 
         // Create new Tab object
         fillBox();
@@ -98,9 +98,9 @@ public class TabSpecies {
         // For each attribute in the table, label column and attach a factory
         List<String> cols = query.getColNames();
         for (int i = 0; i < cols.size(); i++) {
-            TableColumn col = new TableColumn(cols.get(i));
+            TableColumn<SpeciesName, String> col = new TableColumn<>(cols.get(i));
             col.setCellValueFactory(
-                    new PropertyValueFactory<SpeciesName, String>(cols.get(i))
+                    new PropertyValueFactory<>(cols.get(i))
             );            
             table.getColumns().add(col);
         }
@@ -114,9 +114,8 @@ public class TabSpecies {
             Label desc = new Label(DESC_ADD_COM_NAME);
 
             // Make ComboBox to select species to update
-            ComboBox speciesCombo =
-                    new ComboBox(FXCollections.observableList(
-                            query.getSpecies()));
+            ComboBox<String> speciesCombo = new ComboBox<>(
+                    FXCollections.observableList(query.getSpecies()));
             
             // Initialize text field
             newNameField = new TextField();
@@ -126,8 +125,7 @@ public class TabSpecies {
             addButton.setPrefWidth(App.BUTTON_WIDTH);
             addButton.setOnMousePressed((MouseEvent event) -> {
                 // Get ComboBox result
-                String[] sciName = Query.splitSciName(
-                        speciesCombo.getValue().toString());
+                String[] sciName = Query.splitSciName(speciesCombo.getValue());
                 
                 // Get text field input
                 String newName = newNameField.getText();
@@ -156,7 +154,7 @@ public class TabSpecies {
     private final Query query;
     private final Update update;
     private final Tab tab;
-    private final TableView table;
+    private final TableView<SpeciesName> table;
     private final VBox speciesBox;
     private final String TITLE = "Species";
     private final String REFRESH = "Refresh";

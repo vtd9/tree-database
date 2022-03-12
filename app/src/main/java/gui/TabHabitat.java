@@ -16,7 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import java.util.List;
 import db.Query;
-import entities.Sighting;
+import entities.HabitatTree;
 
 /**
  * Create the habitat tab for the main TabPane.
@@ -30,6 +30,9 @@ public class TabHabitat {
     public TabHabitat(Query query) {
         this.query = query;
 
+        // Initialize class variables
+        table = new TableView<>();
+        
         // Create new Tab object
         fillBox();
         tab = new Tab(TITLE);
@@ -146,9 +149,9 @@ public class TabHabitat {
         // For each attribute in the table, label column
         List<String> cols = query.getColNames();
         for (int i = 0; i < cols.size(); i++) {
-            TableColumn col = new TableColumn(cols.get(i));
+            TableColumn<HabitatTree, String> col = new TableColumn<>(cols.get(i));
             col.setCellValueFactory(
-                    new PropertyValueFactory<Sighting, String>(cols.get(i))
+                    new PropertyValueFactory<>(cols.get(i))
             );            
             table.getColumns().add(col);
         }
@@ -164,7 +167,7 @@ public class TabHabitat {
 
     private final Query query;
     private final Tab tab;
-    private final TableView table = new TableView();
+    private final TableView<HabitatTree> table;
     private final VBox sightingBox = new VBox();
     private TextField nameField;
     private ToggleGroup nameGroup;

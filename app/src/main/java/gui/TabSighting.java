@@ -29,6 +29,9 @@ public class TabSighting {
         this.query = query;
         this.update = update;
 
+        // Initialize class variables
+        table = new TableView<>();
+        
         // Create new Tab object
         fillBox();
         tab = new Tab(TITLE);
@@ -124,9 +127,9 @@ public class TabSighting {
         // For each attribute in the table, label column
         List<String> cols = query.getColNames();
         for (int i = 0; i < cols.size(); i++) {
-            TableColumn col = new TableColumn(cols.get(i));
+            TableColumn<Sighting, String> col = new TableColumn<>(cols.get(i));
             col.setCellValueFactory(
-                    new PropertyValueFactory<Sighting, String>(cols.get(i))
+                    new PropertyValueFactory<>(cols.get(i))
             );            
             table.getColumns().add(col);
         }
@@ -142,8 +145,8 @@ public class TabSighting {
         Label desc = new Label(DESC_ADD_SIGHT);
         
         // Make ComboBox to select species to associate sighting with
-        ComboBox speciesCombo =
-                new ComboBox(FXCollections.observableList(
+        ComboBox<String> speciesCombo =
+                new ComboBox<>(FXCollections.observableList(
                         query.getSpecies()));
         
         // Initialize fields
@@ -154,8 +157,7 @@ public class TabSighting {
         addButton.setPrefWidth(App.BUTTON_WIDTH);
         addButton.setOnMousePressed((MouseEvent event) -> {
             // Get ComboBox result
-            String[] sciName = Query.splitSciName(
-                    speciesCombo.getValue().toString());
+            String[] sciName = Query.splitSciName(speciesCombo.getValue());
 
             // Pass inputs from text fields into method
             update.addSighting(sciName[0], sciName[1], newDate.getText(),
@@ -205,7 +207,7 @@ public class TabSighting {
     private final Query query;
     private final Update update;
     private final Tab tab;
-    private final TableView table = new TableView();
+    private final TableView<Sighting> table;
     private final VBox sightingBox = new VBox();
     private TextField nameField;
     private ToggleGroup nameGroup;
