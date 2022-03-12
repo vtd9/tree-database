@@ -30,6 +30,11 @@ the authorization to perform certain getting and setting actions:
 `JavaFX Runtime Version: 13+14`
 
 ## Compiling the code
+Since the development was done in the NetBeans IDE with Maven, the entire project will be zipped together for ease of use.
+The source code is in tree/app/src/main/java and its subdirectories.
+
+Alternatively, instead of NetBeans, the application can be compiled on the command line:
+
 
 ## Using the app
 
