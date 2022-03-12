@@ -3,7 +3,7 @@ package entities;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Stores information on a species
+ * Store and get information on a species
  */
 public class SpeciesName {
     public SpeciesName(String genus, String species, String tree_name) {

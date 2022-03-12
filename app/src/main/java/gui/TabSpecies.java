@@ -37,6 +37,9 @@ public class TabSpecies {
         tab.setContent(speciesBox);
     }
     
+    /**
+     * Fill a vertical box with widgets to set and get species data
+     */
     private void fillBox() {
         // Resize the VBox
         speciesBox.setPrefWidth(App.PREF_WIDTH);
@@ -53,6 +56,10 @@ public class TabSpecies {
                 createAddBox());
     }
     
+    /**
+     * Create a horizontal box with a refresh button
+     * @return HBox object with a refresh button
+     */
     private HBox createButtonBox() {
         // Make refresh button
         Button refreshButton = new Button(REFRESH);
@@ -69,6 +76,9 @@ public class TabSpecies {
         return buttonBox;
     }
     
+    /**
+     * Populate the table view with species
+     */
     private void fillTable() {
         table.setEditable(true);
         table.setPadding(new Insets(5, 5, 5, 5));
@@ -78,6 +88,9 @@ public class TabSpecies {
         createColumns();
     }
     
+    /**
+     * Create columns for the table
+     */
     private void createColumns() {
         // Flush previous columns, if any
         table.getColumns().clear();
@@ -92,6 +105,10 @@ public class TabSpecies {
             table.getColumns().add(col);
         }
     }
+    /**
+     * Create a horizontal box with a label, text field, and add button.
+     * @return HBox object with widgets used for setting
+     */
     private HBox createAddBox() {
             // Make description
             Label desc = new Label(DESC_ADD_COM_NAME);
@@ -128,6 +145,10 @@ public class TabSpecies {
             return addBox;        
         }
 
+    /**
+     * Get created Tab object
+     * @return Tab object for showing and manipulating the species data
+     */
     public Tab getTab() {
         return tab;
     }

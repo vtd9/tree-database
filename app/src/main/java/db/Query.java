@@ -6,29 +6,35 @@ import entities.SpeciesName;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Interface with a database to view a subset of tables.
+ * Handler to view and filter a subset of tables via predefined queries.
  */
 public class Query {
     /**
-     * Construct a Query object with a connection to the database.
+     * Construct a Query object to 
      * @param conn Connection to the database to query.
      */
     public Query(Connection conn) {
         this.conn = conn;
     }
     
+    /**
+     * Get the column names from the result set saved in the instance.
+     * @return list of column names as strings
+     */
     public List<String> getColNames() {
         List<String> colNames = null;
         try {
-            colNames = MetadataHandler.getResultCols(prevRs.getMetaData());
+            colNames = getResultCols(prevRs.getMetaData());
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -38,7 +44,7 @@ public class Query {
     
     /**
      * Get all the species with their common names in the database.
-     * @return List of all species by both scientific and common name.
+     * @return observable list of scientific and common names
      */
     public ObservableList<SpeciesName> getSpeciesName() {
         ObservableList<SpeciesName> species = 
@@ -67,7 +73,7 @@ public class Query {
 
      /**
      * Get all the species in the database.
-     * @return List of all species by both scientific and common name.
+     * @return list of all species by scientific name
      */
     public List<String> getSpecies() {
         List<String> species = new ArrayList<>();
@@ -87,7 +93,13 @@ public class Query {
         return species;
     }
     
-    
+    /**
+     * Get all the sightings of a particular tree species in the database.
+     * @param name
+     * @param sciGiven true if name given as a scientific "Genus species" 
+     * format; false if a colloquial name given
+     * @return 
+     */
     public ObservableList<Sighting> getSightings(String name, boolean sciGiven) {
         ObservableList<Sighting> sights = FXCollections.observableArrayList();
         
@@ -122,9 +134,12 @@ public class Query {
         return sights;
     }
 
+    /**
+     * Get all the known habitats and tree species that inhabit each
+     * according to the database.
+     * @return observable list of habitats and corresponding trees
+     */
     public ObservableList<HabitatTree> getHabitatTree() {
-        
-        // List to store query results in
         ObservableList<HabitatTree> habitatTree = 
                 FXCollections.observableArrayList();
         
@@ -149,10 +164,16 @@ public class Query {
         return habitatTree;
     }
 
+    /**
+     * Get all the known habitats a particular tree species inhabits according 
+     * to the database.
+     * @param name name of species to filter by
+     * @param sciGiven true if name given in scientific format; false if
+     * a common name
+     * @return observable list of habitats 
+     */
     public ObservableList<HabitatTree> getHabitatTreeFilt(
             String name, boolean sciGiven) {
-        
-        // List to store query results in
         ObservableList<HabitatTree> habitatTree = 
                 FXCollections.observableArrayList();
         
@@ -188,11 +209,31 @@ public class Query {
         }
         return habitatTree;
     }
+   
+    /**
+     * Get a list of column names from a result set.
+     * @param rsmd ResultSet to get column names from
+     * @return list of column names
+     */
+    public static List<String> getResultCols(ResultSetMetaData rsmd) {
+        List<String> rsColList = new ArrayList<>();
+        
+        try {
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                rsColList.add(rsmd.getColumnName(i));
+            }
+        }
+        catch (SQLException e) {
+            
+        }
+        return Collections.unmodifiableList(rsColList);
+    }
     
     /**
-     * Parse scientific name (space separated) if given
-     * @param name
-     * @return 
+     * Parse scientific name that, by definition, is space separated in the
+     * format "Genus species"
+     * @param name scientific name to split
+     * @return array of [Genus, species]
      */
     public static String[] splitSciName(String name) {
         if (name.contains(" ")) {
@@ -200,7 +241,6 @@ public class Query {
         }
         return null;
     }
-    
     
     private static ResultSet prevRs;
     private final Connection conn;
@@ -232,5 +272,5 @@ public class Query {
     private final String QUERY_HABITAT_TREE_COM = "SELECT"
             + " genus, species, soil_moisture, soil_type, habitat_type"
             + " FROM habitat NATURAL JOIN grows_in NATURAL JOIN tree"
-            + " NATURAL JOIN common_name WHERE common_name = ?";
+            + " NATURAL JOIN common_name WHERE tree_name = ?";
     }

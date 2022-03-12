@@ -7,7 +7,8 @@ import db.Query;
 import db.Update;
 
 /**
- *
+ * Create a TabPane object and add individual tabs and their widgets for the
+ * main bulk of the GUI.
  */
 public class Tabs {
     public Tabs(Connection conn) {
@@ -19,9 +20,13 @@ public class Tabs {
         // Add tabs
         tabPane.getTabs().add(new TabSpecies(query, update).getTab());
         tabPane.getTabs().add(new TabSighting(query, update).getTab());
+        tabPane.getTabs().add(new TabHabitat(query).getTab());
     }
 
-    
+    /**
+     * Get reference to the created TabPane object
+     * @return TabPane for the main GUI
+     */
     public TabPane getPane() {
         return tabPane;
     }

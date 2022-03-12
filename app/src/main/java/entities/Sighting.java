@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Store information on a tree sighting
+ * Store and get information on a tree sighting
  */
 public class Sighting {
     public Sighting(String sighting_date, float latitude, 

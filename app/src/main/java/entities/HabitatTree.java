@@ -3,7 +3,8 @@ package entities;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Store information on a tree and its habitat
+ * Store and get information on a tree and its habitat for later use in factory
+ * methods.
  */
 public class HabitatTree {
     public HabitatTree(String genus, String species, String soil_moisture,

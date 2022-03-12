@@ -1,25 +1,25 @@
 package gui;
 
-import java.util.List;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import java.util.List;
 import db.Query;
 import db.Update;
 import entities.Sighting;
-import javafx.collections.FXCollections;
-import javafx.scene.control.ComboBox;
 
 /**
  * Create the species tab for the main TabPane
@@ -35,6 +35,10 @@ public class TabSighting {
         tab.setContent(sightingBox);
     }
 
+    /**
+     * Fill the main vertical box with relevant widgets for getting and setting
+     * information in the sighting table.
+     */
     private void fillBox() {
         // Resize the VBox
         sightingBox.setPrefWidth(App.PREF_WIDTH);
@@ -53,6 +57,11 @@ public class TabSighting {
                 createNewSightBox());
     }
     
+    /**
+     * Create horizontal box with a text field and buttons for adding a new
+     * common name.
+     * @return HBox object with relevant widgets for the species tab
+     */
     private HBox createButtonBox() {
         // Initialize nameField
         nameField = new TextField();
@@ -86,19 +95,28 @@ public class TabSighting {
         return buttonBox;
     }
 
+    /**
+     * Populate the table with the result of a sighting filter.
+     */
     private void fillTable() {
         table.setEditable(true);
         table.setPadding(new Insets(5, 5, 5, 5));
 
         // Determine if input given as scientific or common name
         RadioButton selected = (RadioButton) nameGroup.getSelectedToggle();
-        if (selected.getText().equals(RADIO_SCI)) 
-            table.setItems(query.getSightings(nameField.getText(), true));
-        else 
-            table.setItems(query.getSightings(nameField.getText(), false));
-        createColumns();
+        String name = nameField.getText();
+        if (!name.isEmpty()) {
+            if (selected.getText().equals(RADIO_SCI)) 
+                table.setItems(query.getSightings(name, true));
+            else 
+                table.setItems(query.getSightings(name, false));
+            createColumns();
+        }
     }
     
+    /**
+     * Create columns for the table.
+     */
     private void createColumns() {
         // Flush previous columns, if any
         table.getColumns().clear();
@@ -114,6 +132,11 @@ public class TabSighting {
         }
     }
     
+    /**
+     * Create a horizontal box with a label, combo box, text fields, and a
+     * button to execute an insert into the sightings table.
+     * @return HBox object with widgets for the setting operation for sighting
+     */
     private HBox createNewSightBox() {
         // Description of what setter is doing
         Label desc = new Label(DESC_ADD_SIGHT);
@@ -139,9 +162,7 @@ public class TabSighting {
                     newLatitude.getText(), newLongitude.getText(),
                     newAltitude.getText());
         });
-        
-        
-        
+         
         // Make the horizontal box and place the widgets in
         HBox newSightBox = new HBox();
         newSightBox.setSpacing(5);
@@ -151,8 +172,12 @@ public class TabSighting {
         return newSightBox;
     }
     
+    /**
+     * Initialize and set prompt text on the main four text fields for
+     * inserting a new tree sighting.
+     * @param fieldWidth 
+     */
     private void initSightFields(int fieldWidth) {
-        // Iniitialize text fields for other parameters
         newDate = new TextField();
         newLatitude = new TextField();
         newLongitude = new TextField();
@@ -169,6 +194,10 @@ public class TabSighting {
         newAltitude.setPromptText(PROMPT_ALT);
     }
     
+    /**
+     * Get the created tab.
+     * @return Tab object for the sighting-related views and operations
+     */
     public Tab getTab() {
         return tab;
     }
@@ -192,11 +221,10 @@ public class TabSighting {
     
     // Data for inserting new sighting pieces
     private final String DESC_ADD_SIGHT = "Add species sighting:";
-    private final String ADD = "add";
+    private final String ADD = "Add";
     private TextField newDate, newLatitude, newLongitude, newAltitude;
     private final String PROMPT_DATE = "YYYY-MM-DD";
     private final String PROMPT_LAT = "Latitude";
     private final String PROMPT_LON = "Longitude";
     private final String PROMPT_ALT = "Altitude";
-
 }

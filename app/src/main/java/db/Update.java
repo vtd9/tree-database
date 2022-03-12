@@ -6,12 +6,13 @@ import java.sql.SQLException;
 
 /**
  *
- * Interface with a database to update a subset of tables.
+ * Updater with the capability to add information into a subset of tables using
+ * preset DML statements.
  */
 public class Update {
     /**
-     * Construct a Update 
-     * @param conn 
+     * Construct a Update object
+     * @param conn Connection to the forestry database
      */
     public Update(Connection conn) {
         this.conn = conn;
@@ -43,6 +44,18 @@ public class Update {
         return rowAffected;
     }
 
+    /**
+     * Add a new sighting to the database
+     * @param genus genus of tree species to update
+     * @param species species of tree species to update
+     * @param sightingDate date of the sighting; set as empty string to be NULL 
+     * in SQL
+     * @param latitude latitude of the sighting location
+     * @param longitude longitude of the sighting location
+     * @param altitude altitude, in meters, of the sighting location; set
+     * as empty string to be NULL in SQL
+     * @return index of row affected
+     */
     public int addSighting(String genus, String species, String sightingDate, 
             String latitude, String longitude, String altitude) {
         int rowAffected = -1;
@@ -80,39 +93,6 @@ public class Update {
         return rowAffected;
     }
     
-    /**
-     * 
-     * @param soilMoisture
-     * @param soilType
-     * @param habitatType
-     * @return 
-     */
-    public int addHabitat(String soilMoisture, String soilType, 
-            String habitatType) {
-        int rowAffected = -1;
-        
-        // If empty string argument(s) given, set to null
-        if (soilMoisture.isEmpty())
-            soilMoisture = null;
-        if (soilType.isEmpty())
-            soilType = null;
-        if (habitatType.isEmpty())
-            habitatType = null;
-        
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(INSERT_NEW_HABITAT);
-            pstmt.setString(1, soilMoisture);
-            pstmt.setString(2, soilType);
-            pstmt.setString(3, habitatType);
-            rowAffected = pstmt.executeUpdate();
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        
-        return rowAffected;
-    }
-    
     private final Connection conn;
     
     private final String INSERT_COMMON_NAME = 
@@ -126,8 +106,5 @@ public class Update {
             + " SELECT tree_id, ?, ?, ?, ?"
             + " FROM tree"
             + " WHERE genus = ? AND species = ?";
-    
-    private final String INSERT_NEW_HABITAT = 
-            "INSERT INTO habitat (soil_moisture, soil_type, habitat_type)"
-            + " VALUES (?, ?, ?)";
+
 }
