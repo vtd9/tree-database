@@ -55,7 +55,7 @@ Alternatively, instead of NetBeans, the application can be compiled on the comma
 On Windows (<a href="https://stackoverflow.com/questions/6623161/javac-option-to-compile-all-java-files-under-a-given-directory-recursively">reference</a>):
 `dir /s /B *.java > sources.txt`
 
-If the JavaFX package is not included with the Java install, explicitly state the module path:
+If the JavaFX package is not included with the Java install, explicitly state the module path, like so:
 
 `javac --module-path "C:\openjfx-17.0.2_windows-x64_bin-sdk\javafx-sdk-17.0.2\lib" @sources.txt`
 
