@@ -2,7 +2,7 @@
 
 ## Overview of the application interface
 This Java code launches the graphical user interface (GUI) to get and set information in
-the forestry MySQL database. The commonplace packages JDBC and JavaFX were used.
+the forestry MySQL database. The packages JDBC and JavaFX were used.
 Assume the view of an field biologist that has
 the authorization to perform certain getting and setting actions:
 
