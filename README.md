@@ -74,6 +74,8 @@ url=jdbc:mysql://localhost:3306/forestry
 
 Upon successful execution, the interface will appear.
 
+![opened_gui](https://github.com/vtd9/tree-database/blob/main/gui_open.PNG)
+
 ## Using the app
 
 ### Species tab
@@ -81,10 +83,16 @@ Upon successful execution, the interface will appear.
 * *View all tree species in the database with their common names.* Click the "Refresh" button.
 * *Add a new common name to a species existing in the database.* At the bottom of the window, choose a species from the dropdown menu. Enter a new common name in the adjacent field, then click the "Add" button.
 
+![species_tab](https://github.com/vtd9/tree-database/blob/main/gui_species.PNG)
+
 ### Sighting tab
 * *View all sightings of a particular species.* Enter either the scientific or common name in the "Name" field, select the appropriate radio button, and click the "Search" button.
 * *Add a new sighting of a particular species.* At the bottom of the window, choose a species from the dropdown menu, enter a date in the format YYY-MM-DD if known, the latitude (can have a decimal; required), the longitude (can also have a decimal; required), and the altitude (in meters, to the nearest whole number), if known.
 
+![sighting_tab](https://github.com/vtd9/tree-database/blob/main/gui_sighting.PNG)
+
 ### Habitat tab
 * *View all occupied habitats with their corresponding species.* Click the "Refresh" button.
 * *View all habitats known to support a particular species.* Enter either the scientific or common name in the "Name" field, select the appropriate radio button, and click the "Search" button.
+
+![habitat_tab](https://github.com/vtd9/tree-database/blob/main/gui_habitat.PNG)
