@@ -17,25 +17,25 @@ the authorization to perform certain getting and setting actions:
 ### Java
 `java 16.0.2 2021-07-20` `Java(TM) SE Runtime Environment (build 16.0.2+7-67)`
 
-My install is in C:\Program Files\Java\jdk-16.0.2
+For example, C:\Program Files\Java\jdk-16.0.2.
 
 ### JDBC driver for MySQL
 `8.0.28` 
 
 <a href="https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-installing.html">Connector/J Installation</a>
 
-My install is in C:\Program Files (x86)\MySQL\Connector J 8.0
+For example, C:\Program Files (x86)\MySQL\Connector J 8.0.
 
 ### JavaFX
 `JavaFX Version: 13` `JavaFX Runtime Version: 13+14`
 
 <a href="https://gluonhq.com/products/javafx/"> JavaFX downloads</a>
 
-My install is with the NetBeans directory: C:\Program Files\NetBeans-12.6\netbeans\javafx\modules. In addition, just downloading and extracting the zip file means it can be moved anywhere: e.g., C:\openjfx-17.0.2_windows-x64_bin-sdk.
+For example, the install can be in the NetBeans directory: C:\Program Files\NetBeans-12.6\netbeans\javafx\modules. In addition, just downloading and extracting the zip file means it can be moved anywhere: e.g., C:\openjfx-17.0.2_windows-x64_bin-sdk.
 
-## Compiling
+## Compiling and executing
 Since the development was done in the NetBeans IDE with Maven, the entire project will be zipped together for ease of use.
-The source code is in tree/app/src/main/java and its subdirectories. The db.properties file should be in the app\ directory, and the pom.xml file should contain a dependency to the JDBC driver, such as
+The source code is in tree\app\src\main\java and its subdirectories. The db.properties file should be in the app\ directory, and the pom.xml file should contain a dependency to the JDBC driver, such as
 ```
 <dependencies>
     <dependency>
@@ -50,16 +50,29 @@ The source code is in tree/app/src/main/java and its subdirectories. The db.prop
 </dependency>
 ```
 
-Alternatively, instead of NetBeans, the application can be compiled on the command line after navigating into the aforementioned java/ directory of the project:
+Alternatively, instead of NetBeans, the application can be compiled on the command line. Navigate into the aforementioned java\ directory of the project, then compile using `javac`.
 
-On Windows (referenced this <a href="https://stackoverflow.com/questions/6623161/javac-option-to-compile-all-java-files-under-a-given-directory-recursively">StackOverflow post</a>):
+On Windows (<a href="https://stackoverflow.com/questions/6623161/javac-option-to-compile-all-java-files-under-a-given-directory-recursively">reference</a>):
 `dir /s /B *.java > sources.txt`
 
-`javac @sources.txt`
+If the JavaFX package is not included with the Java install, explicitly state the module path:
 
-If the JavaFX package is included with the Java install, explicitly state the module path:
-`java --module-path "C:\Users\RrbDellDesktop3\Downloads\openjfx-17.0.2_windows-x64_bin-sdk\javafx-sdk-17.0.2\lib" --add-modules javafx.controls -jar App.jar`
+`javac --module-path "C:\openjfx-17.0.2_windows-x64_bin-sdk\javafx-sdk-17.0.2\lib" @sources.txt`
 
+To run, explicitly state the module path, the JavaFX controls module, and the JDBC driver .jar in the Java class path. Make sure a reference (i.e., ".") is included to the class path, separated from the JDBC jar with a semicolon (";"). For example,
+
+`java --module-path "C:\openjfx-17.0.2_windows-x64_bin-sdk\javafx-sdk-17.0.2\lib" --add-modules javafx.controls --class-path "C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.28.jar;." gui.App`
+
+With the command line execution, make sure that the file db.properties is in the same tree\app\src\main\java directory, and that this file contains the correct MySQL server, user, and password information, such as
+
+```
+# MySQL DB parameters
+user=root
+password=abc
+url=jdbc:mysql://localhost:3306/forestry
+```
+
+Upon successful execution, the interface will appear.
 
 
 ## Using the app
