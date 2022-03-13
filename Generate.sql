@@ -106,9 +106,9 @@ CREATE TABLE grows_in (
 INSERT INTO grows_in
 VALUES
 (2, 2),
-(2, 3),
-(3, 3),
-(4, 4);
+(2, 4),
+(3, 2),
+(4, 3);
 
 /* Sighting table */
 CREATE TABLE sighting (
