@@ -35,7 +35,7 @@ For example, the install can be in the NetBeans directory: C:\Program Files\NetB
 
 ## Compiling and executing
 Since the development was done in the NetBeans IDE with Maven, the entire project will be zipped together for ease of use.
-The source code is in tree\app\src\main\java and its subdirectories. The db.properties file should be in the app\ directory, and the pom.xml file should contain a dependency to the JDBC driver, such as
+The source code is in app\src\main\java and its subdirectories. The db.properties file should be in the app\ directory, and the pom.xml file should contain a dependency to the JDBC driver, such as
 ```
 <dependencies>
     <dependency>
@@ -63,7 +63,7 @@ To run, explicitly state the module path, the JavaFX controls module, and the JD
 
 `java --module-path "C:\openjfx-17.0.2_windows-x64_bin-sdk\javafx-sdk-17.0.2\lib" --add-modules javafx.controls --class-path "C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.28.jar;." gui.App`
 
-With the command line execution, make sure that the file db.properties is in the same tree\app\src\main\java directory, and that this file contains the correct MySQL server, user, and password information, such as
+With the command line execution, make sure that the file db.properties is in the same app\src\main\java directory, and that this file contains the correct MySQL server, user, and password information, such as
 
 ```
 # MySQL DB parameters
