@@ -35,7 +35,7 @@ For example, the install can be in the NetBeans directory: C:\Program Files\NetB
 
 ## Compiling and executing
 Since the development was done in the NetBeans IDE with Maven, the entire project will be zipped together for ease of use.
-The source code is in app\src\main\java and its subdirectories. The db.properties file should be in the app\ directory, and the pom.xml file should contain a dependency to the JDBC driver, such as
+The source code is in app\src\main\java and its subdirectories. If running via NetBeans, the db.properties file should be in the app\ directory, and the pom.xml file should contain a dependency to the JDBC driver, such as
 ```
 <dependencies>
     <dependency>
