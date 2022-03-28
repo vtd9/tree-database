@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="forestry">
+	<table_structure name="common_name">
+		<field Field="tree_id" Type="int" Null="NO" Key="PRI" Extra="" Comment="" />
+		<field Field="tree_name" Type="varchar(20)" Null="NO" Key="PRI" Extra="" Comment="" />
+		<key Table="common_name" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="tree_id" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<key Table="common_name" Non_unique="0" Key_name="PRIMARY" Seq_in_index="2" Column_name="tree_name" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<options Name="common_name" Engine="InnoDB" Version="10" Row_format="Dynamic" Rows="4" Avg_row_length="4096" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Create_time="2022-03-13 01:10:49" Update_time="2022-03-13 01:10:49" Collation="utf8mb4_0900_ai_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="common_name">
+	<row>
+		<field name="tree_id">1</field>
+		<field name="tree_name">Tamarack</field>
+	</row>
+	<row>
+		<field name="tree_id">2</field>
+		<field name="tree_name">Bitternut Hickory</field>
+	</row>
+	<row>
+		<field name="tree_id">3</field>
+		<field name="tree_name">American Elm</field>
+	</row>
+	<row>
+		<field name="tree_id">4</field>
+		<field name="tree_name">Prairie Crab Apple</field>
+	</row>
+	</table_data>
+	<table_structure name="family">
+		<field Field="family_name" Type="varchar(20)" Null="NO" Key="PRI" Extra="" Comment="" />
+		<field Field="total_species" Type="int" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="climate" Type="varchar(10)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="family_order" Type="varchar(20)" Null="YES" Key="" Extra="" Comment="" />
+		<key Table="family" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="family_name" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<options Name="family" Engine="InnoDB" Version="10" Row_format="Dynamic" Rows="4" Avg_row_length="4096" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Create_time="2022-03-13 01:10:48" Update_time="2022-03-13 01:10:48" Collation="utf8mb4_0900_ai_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="family">
+	<row>
+		<field name="family_name">Juglandaceae</field>
+		<field name="total_species">50</field>
+		<field name="climate">temperate</field>
+		<field name="family_order">Fagales</field>
+	</row>
+	<row>
+		<field name="family_name">Pinaceae</field>
+		<field name="total_species">200</field>
+		<field name="climate">temperate</field>
+		<field name="family_order">Pinales</field>
+	</row>
+	<row>
+		<field name="family_name">Rosaceae</field>
+		<field name="total_species">2000</field>
+		<field name="climate">temperate</field>
+		<field name="family_order">Rosales</field>
+	</row>
+	<row>
+		<field name="family_name">Ulmaceae</field>
+		<field name="total_species">200</field>
+		<field name="climate">temperate</field>
+		<field name="family_order">Rosales</field>
+	</row>
+	</table_data>
+	<table_structure name="flower">
+		<field Field="tree_id" Type="int" Null="NO" Key="PRI" Extra="" Comment="" />
+		<field Field="color" Type="varchar(10)" Null="NO" Key="PRI" Extra="" Comment="" />
+		<field Field="flower_shape" Type="varchar(10)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="petals" Type="int" Null="YES" Key="" Extra="" Comment="" />
+		<key Table="flower" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="tree_id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<key Table="flower" Non_unique="0" Key_name="PRIMARY" Seq_in_index="2" Column_name="color" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<options Name="flower" Engine="InnoDB" Version="10" Row_format="Dynamic" Rows="4" Avg_row_length="4096" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Create_time="2022-03-13 01:10:49" Update_time="2022-03-13 01:10:50" Collation="utf8mb4_0900_ai_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="flower">
+	<row>
+		<field name="tree_id">2</field>
+		<field name="color">green</field>
+		<field name="flower_shape">catkins</field>
+		<field name="petals" xsi:nil="true" />
+	</row>
+	<row>
+		<field name="tree_id">3</field>
+		<field name="color">green</field>
+		<field name="flower_shape">clustered</field>
+		<field name="petals" xsi:nil="true" />
+	</row>
+	<row>
+		<field name="tree_id">4</field>
+		<field name="color">pink</field>
+		<field name="flower_shape">rounded</field>
+		<field name="petals">5</field>
+	</row>
+	<row>
+		<field name="tree_id">4</field>
+		<field name="color">white</field>
+		<field name="flower_shape">rounded</field>
+		<field name="petals">5</field>
+	</row>
+	</table_data>
+	<table_structure name="grows_in">
+		<field Field="tree_id" Type="int" Null="NO" Key="PRI" Extra="" Comment="" />
+		<field Field="habitat_id" Type="int" Null="NO" Key="PRI" Extra="" Comment="" />
+		<key Table="grows_in" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="tree_id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<key Table="grows_in" Non_unique="0" Key_name="PRIMARY" Seq_in_index="2" Column_name="habitat_id" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<key Table="grows_in" Non_unique="1" Key_name="habitat_id" Seq_in_index="1" Column_name="habitat_id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<options Name="grows_in" Engine="InnoDB" Version="10" Row_format="Dynamic" Rows="4" Avg_row_length="4096" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Create_time="2022-03-13 01:10:50" Update_time="2022-03-13 01:10:51" Collation="utf8mb4_0900_ai_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="grows_in">
+	<row>
+		<field name="tree_id">2</field>
+		<field name="habitat_id">2</field>
+	</row>
+	<row>
+		<field name="tree_id">3</field>
+		<field name="habitat_id">2</field>
+	</row>
+	<row>
+		<field name="tree_id">4</field>
+		<field name="habitat_id">3</field>
+	</row>
+	<row>
+		<field name="tree_id">2</field>
+		<field name="habitat_id">4</field>
+	</row>
+	</table_data>
+	<table_structure name="habitat">
+		<field Field="habitat_id" Type="int" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="soil_moisture" Type="varchar(10)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="soil_type" Type="varchar(10)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="habitat_type" Type="varchar(20)" Null="YES" Key="" Extra="" Comment="" />
+		<key Table="habitat" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="habitat_id" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<options Name="habitat" Engine="InnoDB" Version="10" Row_format="Dynamic" Rows="4" Avg_row_length="4096" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Auto_increment="5" Create_time="2022-03-13 01:10:50" Update_time="2022-03-13 01:10:50" Collation="utf8mb4_0900_ai_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="habitat">
+	<row>
+		<field name="habitat_id">1</field>
+		<field name="soil_moisture">wet</field>
+		<field name="soil_type">peaty</field>
+		<field name="habitat_type">bog</field>
+	</row>
+	<row>
+		<field name="habitat_id">2</field>
+		<field name="soil_moisture">moist</field>
+		<field name="soil_type" xsi:nil="true" />
+		<field name="habitat_type">valley</field>
+	</row>
+	<row>
+		<field name="habitat_id">3</field>
+		<field name="soil_moisture">moist</field>
+		<field name="soil_type">clay</field>
+		<field name="habitat_type">stream</field>
+	</row>
+	<row>
+		<field name="habitat_id">4</field>
+		<field name="soil_moisture">dry</field>
+		<field name="soil_type" xsi:nil="true" />
+		<field name="habitat_type">upland</field>
+	</row>
+	</table_data>
+	<table_structure name="sighting">
+		<field Field="sighting_id" Type="int" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="tree_id" Type="int" Null="NO" Key="MUL" Extra="" Comment="" />
+		<field Field="sighting_date" Type="date" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="latitude" Type="float" Null="NO" Key="" Extra="" Comment="" />
+		<field Field="longitude" Type="float" Null="NO" Key="" Extra="" Comment="" />
+		<field Field="altitude" Type="int" Null="YES" Key="" Extra="" Comment="" />
+		<key Table="sighting" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="sighting_id" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<key Table="sighting" Non_unique="1" Key_name="tree_id" Seq_in_index="1" Column_name="tree_id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<options Name="sighting" Engine="InnoDB" Version="10" Row_format="Dynamic" Rows="4" Avg_row_length="4096" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="5" Create_time="2022-03-13 01:10:51" Update_time="2022-03-13 01:10:51" Collation="utf8mb4_0900_ai_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="sighting">
+	<row>
+		<field name="sighting_id">1</field>
+		<field name="tree_id">1</field>
+		<field name="sighting_date">2016-06-15</field>
+		<field name="latitude">45.7</field>
+		<field name="longitude">-93.1</field>
+		<field name="altitude">280</field>
+	</row>
+	<row>
+		<field name="sighting_id">2</field>
+		<field name="tree_id">3</field>
+		<field name="sighting_date">2010-01-19</field>
+		<field name="latitude">43.8</field>
+		<field name="longitude">-70.2</field>
+		<field name="altitude">22</field>
+	</row>
+	<row>
+		<field name="sighting_id">3</field>
+		<field name="tree_id">4</field>
+		<field name="sighting_date">2012-12-01</field>
+		<field name="latitude">41.3</field>
+		<field name="longitude">-91.1</field>
+		<field name="altitude">166</field>
+	</row>
+	<row>
+		<field name="sighting_id">4</field>
+		<field name="tree_id">3</field>
+		<field name="sighting_date">2012-12-01</field>
+		<field name="latitude">46.4</field>
+		<field name="longitude">-62.2</field>
+		<field name="altitude">53</field>
+	</row>
+	</table_data>
+	<table_structure name="tree">
+		<field Field="tree_id" Type="int" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="genus" Type="varchar(20)" Null="NO" Key="MUL" Extra="" Comment="" />
+		<field Field="species" Type="varchar(20)" Null="NO" Key="" Extra="" Comment="" />
+		<field Field="shape" Type="varchar(20)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="leaf_type" Type="varchar(20)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="min_height" Type="int" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="max_height" Type="int" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="family_name" Type="varchar(20)" Null="YES" Key="MUL" Extra="" Comment="" />
+		<key Table="tree" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="tree_id" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<key Table="tree" Non_unique="0" Key_name="genus" Seq_in_index="1" Column_name="genus" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<key Table="tree" Non_unique="0" Key_name="genus" Seq_in_index="2" Column_name="species" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<key Table="tree" Non_unique="1" Key_name="family_name" Seq_in_index="1" Column_name="family_name" Collation="A" Cardinality="4" Null="YES" Index_type="BTREE" Comment="" Index_comment="" Visible="YES" />
+		<options Name="tree" Engine="InnoDB" Version="10" Row_format="Dynamic" Rows="4" Avg_row_length="4096" Data_length="16384" Max_data_length="0" Index_length="32768" Data_free="0" Auto_increment="5" Create_time="2022-03-13 01:10:48" Update_time="2022-03-13 01:10:49" Collation="utf8mb4_0900_ai_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="tree">
+	<row>
+		<field name="tree_id">1</field>
+		<field name="genus">Larix</field>
+		<field name="species">laricina</field>
+		<field name="shape">conical</field>
+		<field name="leaf_type">needles</field>
+		<field name="min_height">12</field>
+		<field name="max_height">24</field>
+		<field name="family_name">Pinaceae</field>
+	</row>
+	<row>
+		<field name="tree_id">2</field>
+		<field name="genus">Carya</field>
+		<field name="species">cordiformis</field>
+		<field name="shape">rounded</field>
+		<field name="leaf_type">pinnately compound</field>
+		<field name="min_height">18</field>
+		<field name="max_height">24</field>
+		<field name="family_name">Juglandaceae</field>
+	</row>
+	<row>
+		<field name="tree_id">3</field>
+		<field name="genus">Ulmus</field>
+		<field name="species">americana</field>
+		<field name="shape">vase</field>
+		<field name="leaf_type">elliptical</field>
+		<field name="min_height">24</field>
+		<field name="max_height">42</field>
+		<field name="family_name">Ulmaceae</field>
+	</row>
+	<row>
+		<field name="tree_id">4</field>
+		<field name="genus">Malus</field>
+		<field name="species">ioensis</field>
+		<field name="shape">broad</field>
+		<field name="leaf_type">elliptical</field>
+		<field name="min_height">3</field>
+		<field name="max_height">9</field>
+		<field name="family_name">Rosaceae</field>
+	</row>
+	</table_data>
+</database>
+</mysqldump>
