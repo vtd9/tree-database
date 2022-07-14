@@ -87,7 +87,7 @@ Upon successful execution, the interface will appear.
 
 ### Sighting tab
 * *View all sightings of a particular species.* Enter either the scientific or common name in the "Name" field, select the appropriate radio button, and click the "Search" button.
-* *Add a new sighting of a particular species.* At the bottom of the window, choose a species from the dropdown menu, enter a date in the format YYY-MM-DD if known, the latitude (can have a decimal; required), the longitude (can also have a decimal; required), and the altitude (in meters, to the nearest whole number), if known.
+* *Add a new sighting of a particular species.* At the bottom of the window, choose a species from the dropdown menu, enter a date in the format YYYY-MM-DD if known, the latitude (can have a decimal; required), the longitude (can also have a decimal; required), and the altitude (in meters, to the nearest whole number), if known.
 
 ![sighting_tab](https://github.com/vtd9/tree-database/blob/main/gui_sighting.PNG)
 
